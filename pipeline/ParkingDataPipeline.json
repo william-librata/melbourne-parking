@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Ingest Dat",
+				"name": "Ingest Data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
