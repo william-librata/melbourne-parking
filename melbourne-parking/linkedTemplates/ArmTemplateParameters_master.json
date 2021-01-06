@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "melbourne-parking"
+		},
+		"ParkingDataLake_connectionString": {
+			"value": ""
+		},
+		"ParkingDataJSON_properties_typeProperties_url": {
+			"value": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
