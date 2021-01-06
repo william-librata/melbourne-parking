@@ -1,0 +1,17 @@
+{
+	"name": "Every 10 Minutes",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 10,
+				"startTime": "2021-01-06T12:06:00",
+				"timeZone": "AUS Eastern Standard Time"
+			}
+		}
+	}
+}
