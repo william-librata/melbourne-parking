@@ -1,0 +1,13 @@
+{
+	"name": "ParkingDataJSON",
+	"properties": {
+		"description": "Melbourne Parking Data - JSON",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
