@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Ingest Data",
+				"name": "Ingest To Data Lake",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
