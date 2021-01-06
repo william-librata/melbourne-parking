@@ -1,12 +1,12 @@
 {
-	"name": "dataflow1",
+	"name": "IngestParkingData",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ParkingData",
+						"referenceName": "ParkingDataSource",
 						"type": "DatasetReference"
 					},
 					"name": "ParkingData"
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "ParkingDataLake",
+						"referenceName": "ParkingDataDestination",
 						"type": "DatasetReference"
 					},
 					"name": "ParkingDataLake"

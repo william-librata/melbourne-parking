@@ -1,5 +1,5 @@
 {
-	"name": "ParkingDataLake",
+	"name": "ParkingDataDestination",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ParkingDataLake",

@@ -1,5 +1,5 @@
 {
-	"name": "ParkingData",
+	"name": "ParkingDataSource",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ParkingDataJSON",
