@@ -14,7 +14,7 @@
 					"value": "@concat(convertFromUtc(utcnow(), 'A.U.S. Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.JSON')",
 					"type": "Expression"
 				},
-				"container": "MelbourneParking"
+				"container": "melbourne-parking"
 			}
 		},
 		"schema": {}
