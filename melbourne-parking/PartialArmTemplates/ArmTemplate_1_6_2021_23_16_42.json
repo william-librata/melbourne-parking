@@ -1,0 +1,165 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "melbourne-parking"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ParkingDataPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Ingest Data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "JsonSource",
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET"
+								},
+								"formatSettings": {
+									"type": "JsonReadSettings"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings",
+									"filePattern": "arrayOfObjects"
+								}
+							},
+							"enableStaging": false,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Warning",
+									"enableReliableLogging": true
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "ParkingDataLakeLog",
+										"type": "LinkedServiceReference"
+									}
+								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['bay_id']"
+										},
+										"sink": {
+											"path": "$['bay_id']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['st_marker_id']"
+										},
+										"sink": {
+											"path": "$['st_marker_id']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['status']"
+										},
+										"sink": {
+											"path": "$['status']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['location']['latitude']"
+										},
+										"sink": {
+											"path": "$['location']['latitude']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['location']['longitude']"
+										},
+										"sink": {
+											"path": "$['location']['longitude']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['location']['human_address']"
+										},
+										"sink": {
+											"path": "$['location']['human_address']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['lat']"
+										},
+										"sink": {
+											"path": "$['lat']"
+										}
+									},
+									{
+										"source": {
+											"path": "$['lon']"
+										},
+										"sink": {
+											"path": "$['lon']"
+										}
+									},
+									{
+										"source": {
+											"path": "$[':@computed_region_evbi_jbp8']"
+										},
+										"sink": {
+											"path": "$[':@computed_region_evbi_jbp8']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ParkingDataSource",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ParkingDataDestination",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}

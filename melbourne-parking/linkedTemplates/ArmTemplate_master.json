@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ParkingDataLake'"
 		},
+		"ParkingDataLakeLog_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ParkingDataLakeLog'"
+		},
 		"ParkingDataJSON_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json"
@@ -44,6 +48,9 @@
 					},
 					"ParkingDataLake_connectionString": {
 						"value": "[parameters('ParkingDataLake_connectionString')]"
+					},
+					"ParkingDataLakeLog_connectionString": {
+						"value": "[parameters('ParkingDataLakeLog_connectionString')]"
 					},
 					"ParkingDataJSON_properties_typeProperties_url": {
 						"value": "[parameters('ParkingDataJSON_properties_typeProperties_url')]"
