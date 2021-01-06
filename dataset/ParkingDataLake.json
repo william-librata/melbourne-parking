@@ -1,0 +1,22 @@
+{
+	"name": "ParkingDataLake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ParkingDataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(convertFromUtc(utcnow(), 'A.U.S. Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.JSON')",
+					"type": "Expression"
+				},
+				"container": "MelbourneParking"
+			}
+		},
+		"schema": {}
+	}
+}

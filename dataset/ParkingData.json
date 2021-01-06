@@ -1,0 +1,53 @@
+{
+	"name": "ParkingData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ParkingDataJSON",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"bay_id": {
+					"type": "string"
+				},
+				"st_marker_id": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"location": {
+					"type": "object",
+					"properties": {
+						"latitude": {
+							"type": "string"
+						},
+						"longitude": {
+							"type": "string"
+						},
+						"human_address": {
+							"type": "string"
+						}
+					}
+				},
+				"lat": {
+					"type": "string"
+				},
+				"lon": {
+					"type": "string"
+				},
+				":@computed_region_evbi_jbp8": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
