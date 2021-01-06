@@ -31,10 +31,101 @@
 							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
-							"type": "JsonWriteSettings"
+							"type": "JsonWriteSettings",
+							"filePattern": "arrayOfObjects"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"logSettings": {
+						"enableCopyActivityLog": true,
+						"copyActivityLogSettings": {
+							"logLevel": "Warning",
+							"enableReliableLogging": true
+						},
+						"logLocationSettings": {
+							"linkedServiceName": {
+								"referenceName": "ParkingDataLakeLog",
+								"type": "LinkedServiceReference"
+							}
+						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['bay_id']"
+								},
+								"sink": {
+									"path": "$['bay_id']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['st_marker_id']"
+								},
+								"sink": {
+									"path": "$['st_marker_id']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['status']"
+								},
+								"sink": {
+									"path": "$['status']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['location']['latitude']"
+								},
+								"sink": {
+									"path": "$['location']['latitude']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['location']['longitude']"
+								},
+								"sink": {
+									"path": "$['location']['longitude']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['location']['human_address']"
+								},
+								"sink": {
+									"path": "$['location']['human_address']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['lat']"
+								},
+								"sink": {
+									"path": "$['lat']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['lon']"
+								},
+								"sink": {
+									"path": "$['lon']"
+								}
+							},
+							{
+								"source": {
+									"path": "$[':@computed_region_evbi_jbp8']"
+								},
+								"sink": {
+									"path": "$[':@computed_region_evbi_jbp8']"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
