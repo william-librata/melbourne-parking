@@ -14,6 +14,10 @@
 					"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.JSON')",
 					"type": "Expression"
 				},
+				"folderPath": {
+					"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-dd'), '-Melbourne-Parking-Data.JSON')",
+					"type": "Expression"
+				},
 				"container": "melbourne-parking"
 			}
 		},
