@@ -6,18 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "melbourne-parking"
-		},
-		"ParkingDataLake_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ParkingDataLake'"
-		},
-		"ParkingDataLakeLog_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ParkingDataLakeLog'"
-		},
-		"ParkingDataJSON_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json"
 		}
 	},
 	"variables": {
@@ -158,15 +146,13 @@
 						"inputs": [
 							{
 								"referenceName": "ParkingDataSource",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "ParkingDataDestination",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -174,9 +160,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ParkingDataSource')]",
-				"[concat(variables('factoryId'), '/datasets/ParkingDataDestination')]",
-				"[concat(variables('factoryId'), '/linkedServices/ParkingDataLakeLog')]"
+				"[concat(variables('factoryId'), '/datasets/ParkingDataDestination')]"
 			]
 		},
 		{
@@ -206,140 +190,7 @@
 				},
 				"schema": {}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ParkingDataLake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ParkingDataSource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ParkingDataJSON",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "HttpServerLocation"
-					}
-				},
-				"schema": {
-					"type": "object",
-					"properties": {
-						"bay_id": {
-							"type": "string"
-						},
-						"st_marker_id": {
-							"type": "string"
-						},
-						"status": {
-							"type": "string"
-						},
-						"location": {
-							"type": "object",
-							"properties": {
-								"latitude": {
-									"type": "string"
-								},
-								"longitude": {
-									"type": "string"
-								},
-								"human_address": {
-									"type": "string"
-								}
-							}
-						},
-						"lat": {
-							"type": "string"
-						},
-						"lon": {
-							"type": "string"
-						},
-						":@computed_region_evbi_jbp8": {
-							"type": "string"
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ParkingDataJSON')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ParkingDataJSON')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Melbourne Parking Data - JSON",
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('ParkingDataJSON_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
-				}
-			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ParkingDataLake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Melbourne Parking Data Lake",
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('ParkingDataLake_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ParkingDataLakeLog')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('ParkingDataLakeLog_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Every 10 Minutes')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "ParkingDataPipeline",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 10,
-						"startTime": "2021-01-06T12:06:00",
-						"timeZone": "AUS Eastern Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ParkingDataPipeline')]"
-			]
 		}
 	]
 }
