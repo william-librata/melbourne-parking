@@ -17,6 +17,7 @@
 				"frequency": "Minute",
 				"interval": 10,
 				"startTime": "2021-01-06T12:06:00",
+				"endTime": "2021-05-09T00:00:00",
 				"timeZone": "AUS Eastern Standard Time"
 			}
 		}
