@@ -12,7 +12,7 @@
 			"value": ""
 		},
 		"ParkingDataJSON_properties_typeProperties_url": {
-			"value": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json"
+			"value": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.csv"
 		},
 		"containerUri": {
 			"value": ""

@@ -17,7 +17,7 @@
 		},
 		"ParkingDataJSON_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.json"
+			"defaultValue": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.csv"
 		}
 	},
 	"variables": {
@@ -82,7 +82,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": {
-							"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.JSON')",
+							"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.CSV')",
 							"type": "Expression"
 						},
 						"folderPath": {
