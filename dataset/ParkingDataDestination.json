@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.JSON')",
+					"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.CSV')",
 					"type": "Expression"
 				},
 				"folderPath": {
