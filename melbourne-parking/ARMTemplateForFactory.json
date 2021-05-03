@@ -44,23 +44,24 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "JsonSource",
+								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "HttpReadSettings",
 									"requestMethod": "GET"
 								},
 								"formatSettings": {
-									"type": "JsonReadSettings"
+									"type": "DelimitedTextReadSettings"
 								}
 							},
 							"sink": {
-								"type": "JsonSink",
+								"type": "DelimitedTextSink",
 								"storeSettings": {
 									"type": "AzureBlobStorageWriteSettings"
 								},
 								"formatSettings": {
-									"type": "JsonWriteSettings",
-									"filePattern": "arrayOfObjects"
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
@@ -76,95 +77,18 @@
 										"type": "LinkedServiceReference"
 									}
 								}
-							},
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "$['bay_id']"
-										},
-										"sink": {
-											"path": "$['bay_id']"
-										}
-									},
-									{
-										"source": {
-											"path": "$['st_marker_id']"
-										},
-										"sink": {
-											"path": "$['st_marker_id']"
-										}
-									},
-									{
-										"source": {
-											"path": "$['status']"
-										},
-										"sink": {
-											"path": "$['status']"
-										}
-									},
-									{
-										"source": {
-											"path": "$['location']['latitude']"
-										},
-										"sink": {
-											"path": "$['location']['latitude']"
-										}
-									},
-									{
-										"source": {
-											"path": "$['location']['longitude']"
-										},
-										"sink": {
-											"path": "$['location']['longitude']"
-										}
-									},
-									{
-										"source": {
-											"path": "$['location']['human_address']"
-										},
-										"sink": {
-											"path": "$['location']['human_address']"
-										}
-									},
-									{
-										"source": {
-											"path": "$['lat']"
-										},
-										"sink": {
-											"path": "$['lat']"
-										}
-									},
-									{
-										"source": {
-											"path": "$['lon']"
-										},
-										"sink": {
-											"path": "$['lon']"
-										}
-									},
-									{
-										"source": {
-											"path": "$[':@computed_region_evbi_jbp8']"
-										},
-										"sink": {
-											"path": "$[':@computed_region_evbi_jbp8']"
-										}
-									}
-								]
 							}
 						},
 						"inputs": [
 							{
-								"referenceName": "ParkingDataSource",
+								"referenceName": "ParkingDataSourceCSV",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "ParkingDataDestination",
+								"referenceName": "ParkingDataDestinationCSV",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -174,8 +98,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ParkingDataSource')]",
-				"[concat(variables('factoryId'), '/datasets/ParkingDataDestination')]",
+				"[concat(variables('factoryId'), '/datasets/ParkingDataSourceCSV')]",
+				"[concat(variables('factoryId'), '/datasets/ParkingDataDestinationCSV')]",
 				"[concat(variables('factoryId'), '/linkedServices/ParkingDataLakeLog')]"
 			]
 		},
@@ -340,6 +264,118 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/ParkingDataPipeline')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ParkingDataDestinationCSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ParkingDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.CSV')",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy'), '/', convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'MM'), '/', convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'dd'))",
+							"type": "Expression"
+						},
+						"container": "melbourne-parking"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "bay_id",
+						"type": "String"
+					},
+					{
+						"name": "st_marker_id",
+						"type": "String"
+					},
+					{
+						"name": "status",
+						"type": "String"
+					},
+					{
+						"name": "location",
+						"type": "String"
+					},
+					{
+						"name": "lat",
+						"type": "String"
+					},
+					{
+						"name": "lon",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ParkingDataLake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ParkingDataSourceCSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ParkingDataJSON",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "https://data.melbourne.vic.gov.au/resource/vh2v-4nfs.csv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "bay_id",
+						"type": "String"
+					},
+					{
+						"name": "st_marker_id",
+						"type": "String"
+					},
+					{
+						"name": "status",
+						"type": "String"
+					},
+					{
+						"name": "location",
+						"type": "String"
+					},
+					{
+						"name": "lat",
+						"type": "String"
+					},
+					{
+						"name": "lon",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ParkingDataJSON')]"
 			]
 		}
 	]
