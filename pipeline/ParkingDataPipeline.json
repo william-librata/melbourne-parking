@@ -16,13 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "JsonSource",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "HttpReadSettings",
 							"requestMethod": "GET"
 						},
 						"formatSettings": {
-							"type": "JsonReadSettings"
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -53,7 +53,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ParkingDataSource",
+						"referenceName": "ParkingDataSourceCSV",
 						"type": "DatasetReference"
 					}
 				],
