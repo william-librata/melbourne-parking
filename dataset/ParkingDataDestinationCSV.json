@@ -1,0 +1,55 @@
+{
+	"name": "ParkingDataDestinationCSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ParkingDataLake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy-MM-ddTHH-mm-ss'), '-Melbourne-Parking-Data.CSV')",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat(convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'yyyy'), '/', convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'MM'), '/', convertFromUtc(utcnow(), 'AUS Eastern Standard Time', 'dd'))",
+					"type": "Expression"
+				},
+				"container": "melbourne-parking"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "bay_id",
+				"type": "String"
+			},
+			{
+				"name": "st_marker_id",
+				"type": "String"
+			},
+			{
+				"name": "status",
+				"type": "String"
+			},
+			{
+				"name": "location",
+				"type": "String"
+			},
+			{
+				"name": "lat",
+				"type": "String"
+			},
+			{
+				"name": "lon",
+				"type": "String"
+			}
+		]
+	}
+}
